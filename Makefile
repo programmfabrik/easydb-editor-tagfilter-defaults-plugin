@@ -6,7 +6,7 @@ INSTALL_FILES = \
 	$(WEB)/l10n/es-ES.json \
 	$(WEB)/l10n/it-IT.json \
 	$(WEB)/editor-tagfilter-defaults.js \
-	easydb-plugin-editor-tagfilter-defaults.config.yml
+	easydb-editor-tagfilter-defaults.config.yml
 
 L10N_FILES = l10n/editor-tagfilter-defaults.csv
 
