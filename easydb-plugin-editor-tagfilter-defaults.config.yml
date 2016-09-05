@@ -1,0 +1,38 @@
+plugin:
+  name: editor-tagfilter-defaults
+  version: 1.0
+  vendor: Programmfabrik GmbH
+  server:
+    api-version:
+      require: 1
+  webfrontend:
+    url: build/webfrontend/editor-tagfilter-defaults.js
+    l10n: build/webfrontend/l10n/
+
+base_config:
+  - name: editor-tagfilter-defaults
+    group: editor
+    parameters:
+      filters:
+        type: table
+        fields:
+          - name: "operation"
+            type: string-list
+            label_choice: "operation"
+            choices:
+              - update
+              - insert
+          - name: "tagfilter"
+            tagfilter: true
+            name: "tagfilter_json"
+            type: "text"
+          - name: "defaults"
+            type: table
+            fields:
+              - name: "mask-column-select"
+                mask-column-select: true
+                name: "mask_column_id"
+                type: "int"
+              - name: "default"
+                type: "text"
+
