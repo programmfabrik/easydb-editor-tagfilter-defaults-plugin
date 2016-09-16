@@ -3,6 +3,142 @@ class EditorTagfilterDefaults extends CUI.Element
 		super()
 		BaseConfig.registerPlugin(new BaseConfigEditorTagfilterDefaults())
 
+		filters_by_mask_name = {}
+		filters = ez5.session.getBaseConfig().system["editor-tagfilter-defaults"]?.filters or []
+
+		if not filters
+			return
+
+		for filter in filters
+			mask_name = ez5.mask.CURRENT._mask_by_id[filter.mask_id]?.name
+
+			if not mask_name
+				console.warn("EditorTagfilterDefaults: Unable to load mask", filter)
+				continue
+
+			if not filter.default or filter.operation.length == 0
+				continue
+
+			if not filters_by_mask_name[mask_name]
+				filters_by_mask_name[mask_name] = []
+
+			filters_by_mask_name[mask_name].push(filter)
+
+			if filter.tagfilter
+				filter.tagfilter = JSON.parse(filter.tagfilter)
+			else
+				filter.tagfilter = null
+
+			filter.default = JSON.parse(filter.default)
+
+
+		# console.error "filters by mask name", filters_by_mask_name
+
+		Events.listen
+			type: [
+				"editor-add-new-result-object"
+				"editor-tags-field-changed"
+			]
+
+			call: (ev, info) =>
+				apply_filters =  filters_by_mask_name[ info.editor_data.mask_name ]
+				if not apply_filters
+					return
+
+				switch info.editor.getMode()
+					when "bulk"
+						# not applying filters in bulk more
+						return
+					when "new"
+						operation = "insert"
+					when "single"
+						operation = "update"
+
+				for apply_filter in apply_filters
+					if operation not in apply_filter.operation
+						continue
+
+					console.log "editor %c"+ev.getType(), "font-size: 40px;"
+					@applyFilter(ev, info, apply_filter)
+				return
+
+
+	applyFilter: (ev, info, filter) ->
+		if not info.object
+			return
+
+		console.error "apply Filter", filter, filter.tagfilter
+
+		if filter.tagfilter
+			# check tags
+			tagfilter_ok = false
+			do ->
+				tag_ids = (tag._id for tag in (info.object.getData()._tags or []))
+
+				# ANY
+				ok = false
+				for any in filter.tagfilter.any
+					if any in tag_ids
+						tagfilter_ok = true
+						break
+
+				if not tagfilter_ok
+					return
+
+				# ALL
+				ok = true
+				for all in filter.tagfilter.all
+					if all not in tag_ids
+						tagfilter_ok = false
+						break
+
+				if not tagfilter_ok
+					return
+
+				# NOT
+				ok = true
+				for all in filter.tagfilter.not
+					if all in tag_ids
+						tagfilter_ok = false
+						break
+				return
+		else
+			tagfilter_ok = true
+
+		find_field = (column_id) =>
+			for field in info.object.mask.getFields("all")
+				if field instanceof MaskSplitter
+					continue
+
+				if field.id() == column_id
+					return field
+			throw("Field not found.")
+
+		if filter.default?.length > 0
+			for rule, idx in filter.default
+				rule._idx = idx
+				rule._tagfilter_match = tagfilter_ok
+				switch rule.action
+					when "preset"
+						field = find_field(rule.column_id)
+						console.debug "presetting field", rule, field, info.object.getData()
+						field.updateEditorInputValue(ev, rule, info.object.getData())
+					else
+						console.error("EditorTagfilterDefaults: Skipping unknown action: "+rule.action)
+
+		return
+
+
+
+
+
+
+
+
+
+
+
+
 class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 
 	getFieldDefFromParm: (baseConfig, pname, def, parent_def) ->
