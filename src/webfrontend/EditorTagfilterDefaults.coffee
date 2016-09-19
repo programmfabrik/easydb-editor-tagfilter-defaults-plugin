@@ -76,31 +76,34 @@ class EditorTagfilterDefaults extends CUI.Element
 				tag_ids = (tag._id for tag in (info.object.getData()._tags or []))
 
 				# ANY
-				ok = false
-				for any in filter.tagfilter.any
-					if any in tag_ids
-						tagfilter_ok = true
-						break
+				if filter.tagfilter.any
+					tagfilter_ok = false
+					for any in filter.tagfilter.any
+						if any in tag_ids
+							tagfilter_ok = true
+							break
 
-				if not tagfilter_ok
-					return
+					if not tagfilter_ok
+						return
 
 				# ALL
-				ok = true
-				for all in filter.tagfilter.all
-					if all not in tag_ids
-						tagfilter_ok = false
-						break
+				if filter.tagfilter.all
+					tagfilter_ok = true
+					for all in filter.tagfilter.all
+						if all not in tag_ids
+							tagfilter_ok = false
+							break
 
-				if not tagfilter_ok
-					return
+					if not tagfilter_ok
+						return
 
 				# NOT
-				ok = true
-				for all in filter.tagfilter.not
-					if all in tag_ids
-						tagfilter_ok = false
-						break
+				if filter.tagfilter.all
+					tagfilter_ok = true
+					for all in filter.tagfilter.not
+						if all in tag_ids
+							tagfilter_ok = false
+							break
 				return
 		else
 			tagfilter_ok = true
