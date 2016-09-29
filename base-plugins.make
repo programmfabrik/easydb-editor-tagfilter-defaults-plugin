@@ -1,8 +1,7 @@
 top_level := ../../..
 
 WEB = build/webfrontend
-L10N2JSON := $(top_level)/src/imexporter/l10n2json
-CULTURES_CSV := $(top_level)/base/l10n/cultures.csv
+L10N2JSON := python $(top_level)/webfrontend/l10n2json.py
 
 JS ?= $(WEB)/${PLUGIN_NAME}.js
 SCSS ?= $(WEB)/${PLUGIN_NAME}.scss
@@ -17,9 +16,9 @@ ${SCSS}: ${SCSS_FILES}
 	mkdir -p $(dir $@)
 	cat $^ > $@
 
-build-stamp-l10n: $(CULTURES_CSV) $(L10N_FILES)
+build-stamp-l10n: $(L10N_FILES)
 	mkdir -p $(WEB)/l10n
-	$(L10N2JSON) $(CULTURES_CSV) $(L10N_FILES) $(WEB)/l10n
+	$(L10N2JSON) $(L10N_FILES) $(WEB)/l10n
 	touch $@
 
 %.coffee.js: %.coffee
