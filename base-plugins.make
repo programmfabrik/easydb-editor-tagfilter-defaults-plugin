@@ -1,7 +1,5 @@
-top_level := ../../..
-
 WEB = build/webfrontend
-L10N2JSON := python $(top_level)/webfrontend/l10n2json.py
+L10N2JSON := easydb-l10n2json.py
 
 JS ?= $(WEB)/${PLUGIN_NAME}.js
 SCSS ?= $(WEB)/${PLUGIN_NAME}.scss
@@ -29,10 +27,8 @@ $(WEB)/%: src/webfrontend/%
 	cp $^ $@
 
 install:
-	ln -sf ../../../base/plugins/$(PLUGIN_NAME) $(top_level)/build/plugin/base
 
 uninstall:
-	rm -rf $(top_level)/build/plugin/base/$(PLUGIN_NAME)
 
 install-server: ${INSTALL_FILES}
 	[ ! -z "${INSTALL_PREFIX}" ]
