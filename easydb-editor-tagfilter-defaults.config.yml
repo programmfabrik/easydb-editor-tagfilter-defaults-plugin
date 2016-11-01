@@ -6,8 +6,8 @@ plugin:
     api-version:
       require: 1
   webfrontend:
-    url: build/webfrontend/editor-tagfilter-defaults.js
-    l10n: build/webfrontend/l10n
+    url: editor-tagfilter-defaults.js
+    l10n: l10n
 
 base_config:
   - name: editor-tagfilter-defaults
