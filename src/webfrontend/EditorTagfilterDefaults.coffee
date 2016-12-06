@@ -1,3 +1,10 @@
+###
+ * easydb-editor-tagfilter-defaults
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class EditorTagfilterDefaults extends CUI.Element
 	readOpts: ->
 		super()
