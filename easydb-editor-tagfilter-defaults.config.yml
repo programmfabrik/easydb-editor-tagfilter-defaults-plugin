@@ -23,9 +23,7 @@ base_config:
               - update
               - insert
           - name: "tagfilter"
-            type: "text"
-            store_as_json: true
-            plugin_type: "tag-filter"
+            type: "tagfilter-select"
           - name: "mask_id"
             type: "int"
             plugin_type: "mask-select"

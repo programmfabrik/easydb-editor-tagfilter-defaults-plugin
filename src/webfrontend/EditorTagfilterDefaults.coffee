@@ -32,7 +32,8 @@ class EditorTagfilterDefaults extends CUI.Element
 			filters_by_mask_name[mask_name].push(filter)
 
 			if filter.tagfilter
-				filter.tagfilter = JSON.parse(filter.tagfilter)
+				if isString(filter.tagfilter)
+					filter.tagfilter = JSON.parse(filter.tagfilter)
 			else
 				filter.tagfilter = null
 
