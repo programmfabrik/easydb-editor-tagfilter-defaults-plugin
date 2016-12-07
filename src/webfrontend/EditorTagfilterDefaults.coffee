@@ -236,6 +236,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 						form:
 							label: $$(baseConfig.locaKey("parameter")+".value.label")
 						type: Input
+						textarea: true
 						name: "value"
 					]
 
