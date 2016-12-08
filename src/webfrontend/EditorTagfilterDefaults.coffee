@@ -75,46 +75,9 @@ class EditorTagfilterDefaults extends CUI.Element
 		if not info.object
 			return
 
-		console.error "apply Filter", filter, filter.tagfilter
+		tagfilter_ok = TagFilter.matchesTags(filter.tagfilter, info.object.getData()._tags)
 
-		if filter.tagfilter
-			# check tags
-			tagfilter_ok = false
-			do ->
-				tag_ids = (tag._id for tag in (info.object.getData()._tags or []))
-
-				# ANY
-				if filter.tagfilter.any
-					tagfilter_ok = false
-					for any in filter.tagfilter.any
-						if any in tag_ids
-							tagfilter_ok = true
-							break
-
-					if not tagfilter_ok
-						return
-
-				# ALL
-				if filter.tagfilter.all
-					tagfilter_ok = true
-					for all in filter.tagfilter.all
-						if all not in tag_ids
-							tagfilter_ok = false
-							break
-
-					if not tagfilter_ok
-						return
-
-				# NOT
-				if filter.tagfilter.all
-					tagfilter_ok = true
-					for all in filter.tagfilter.not
-						if all in tag_ids
-							tagfilter_ok = false
-							break
-				return
-		else
-			tagfilter_ok = true
+		console.error "apply Filter", filter, filter.tagfilter, tagfilter_ok
 
 		find_field = (column_id) =>
 			for field in info.object.mask.getFields("all")
@@ -138,13 +101,6 @@ class EditorTagfilterDefaults extends CUI.Element
 						console.error("EditorTagfilterDefaults: Skipping unknown action: "+rule.action)
 
 		return
-
-
-
-
-
-
-
 
 
 
