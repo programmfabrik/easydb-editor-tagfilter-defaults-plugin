@@ -12,3 +12,4 @@
 "server.config.option.system.editor-tagfilter-defaults.type.preset","Vorbelegung"
 "server.config.parameter.system.editor-tagfilter-defaults.column_id.label","Feld"
 "server.config.parameter.system.editor-tagfilter-defaults.value.label","Wert"
+"editor.tagfilter.defaults.replacement.button|text","Ersetzungen"

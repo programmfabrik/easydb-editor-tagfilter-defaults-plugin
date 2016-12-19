@@ -44,12 +44,15 @@ class EditorTagfilterDefaults extends CUI.Element
 
 		Events.listen
 			type: [
-				"editor-add-new-result-object"
+				"editor-load"
 				"editor-tags-field-changed"
 			]
 
 			call: (ev, info) =>
+
 				apply_filters =  filters_by_mask_name[ info.editor_data.mask_name ]
+				# console.error "add new result object", ev, info, info.editor_data.mask_name, apply_filters
+
 				if not apply_filters
 					return
 
@@ -66,18 +69,17 @@ class EditorTagfilterDefaults extends CUI.Element
 					if operation not in apply_filter.operation
 						continue
 
-					console.log "editor %c"+ev.getType(), "font-size: 40px;"
 					@applyFilter(ev, info, apply_filter)
 				return
 
 
 	applyFilter: (ev, info, filter) ->
-		if not info.object
+		obj = info.object or info.new_object
+
+		if not obj
 			return
 
-		tagfilter_ok = TagFilter.matchesTags(filter.tagfilter, info.object.getData()._tags)
-
-		console.error "apply Filter", filter, filter.tagfilter, tagfilter_ok
+		tagfilter_ok = TagFilter.matchesTags(filter.tagfilter, obj.getData()._tags)
 
 		find_field = (column_id) =>
 			for field in info.object.mask.getFields("all")
@@ -86,7 +88,8 @@ class EditorTagfilterDefaults extends CUI.Element
 
 				if field.id() == column_id
 					return field
-			throw("Field not found.")
+
+			return
 
 		if filter.default?.length > 0
 			for rule, idx in filter.default
@@ -95,8 +98,10 @@ class EditorTagfilterDefaults extends CUI.Element
 				switch rule.action
 					when "preset"
 						field = find_field(rule.column_id)
-						console.debug "presetting field", rule, field, info.object.getData()
-						field.updateEditorInputValue(ev, rule, info.object.getData())
+						if not field
+							console.error("EditorTagfilterDefaults: Skipping unknown field: "+column_id)
+						else
+							field.updateEditorInputValue(ev, rule, info.object.getData())
 					else
 						console.error("EditorTagfilterDefaults: Skipping unknown action: "+rule.action)
 
@@ -152,10 +157,44 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 						text_selected: ot_name+": "+mask_name
 						value: mask_id
 
+				data = null
+
 				field =
-					type: Select
-					options: mask_opts
-					name: pname
+					type: Form
+					onDataInit: (form, _data) =>
+						data = _data
+					fields: [
+						type: Select
+						options: mask_opts
+						name: pname
+					,
+						type: FormButton
+						appearance: "flat"
+						icon: ez5.loca.get_key("editor.tagfilter.defaults.replacement.button|icon")
+						text: ez5.loca.get_key("editor.tagfilter.defaults.replacement.button|text")
+						tooltip:
+							text: ez5.loca.get_key("editor.tagfilter.defaults.replacement.button|tooltip")
+						onClick: (ev, btn) =>
+							mask = ez5.mask.CURRENT._mask_by_id[data[pname]]
+							if not mask
+								return
+							mask_inst = ez5.mask.CURRENT._mask_instance_by_name[mask.name]
+							ro = new ResultObjectDemo(mask: mask_inst, format: "long")
+							rec = mask_inst.getReplacementRecord(ro.getData())
+
+							repl =  []
+							for key of rec
+								repl.push("%"+key+"%")
+
+							# console.error "formButton", data, mask_inst, ro, rec, repl
+
+							new Tooltip
+								on_click: true
+								element: btn
+								class: "ez5-editor-tagfilter-defaults-replacements-help"
+								text: repl.join("\n")
+							.show()
+					]
 
 			when "column-default-value"
 
