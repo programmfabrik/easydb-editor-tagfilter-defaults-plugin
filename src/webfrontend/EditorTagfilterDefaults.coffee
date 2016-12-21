@@ -179,7 +179,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 							if not mask
 								return
 							mask_inst = ez5.mask.CURRENT._mask_instance_by_name[mask.name]
-							ro = new ResultObjectDemo(mask: mask_inst, format: "long")
+							ro = new ResultObjectDemo(mask: mask_inst, format: "long", format_linked_object: "standard")
 							rec = mask_inst.getReplacementRecord(ro.getData())
 
 							repl =  []
