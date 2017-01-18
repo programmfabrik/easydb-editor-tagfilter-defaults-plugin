@@ -64,6 +64,9 @@ class EditorTagfilterDefaults extends CUI.Element
 						operation = "insert"
 					when "single"
 						operation = "update"
+						if ev.getType() == "editor-load"
+							# only execute when in "new" mode
+							return
 
 				for apply_filter in apply_filters
 					if operation not in apply_filter.operation
