@@ -9,13 +9,17 @@ INSTALL_FILES = \
 	easydb-editor-tagfilter-defaults.config.yml
 
 L10N_FILES = l10n/editor-tagfilter-defaults.csv
+L10N_GOOGLE_KEY = 1Z3UPJ6XqLBp-P8SUf-ewq4osNJ3iZWKJB83tc6Wrfn0
+L10N_GOOGLE_GID = 262681630
+
+L10N2JSON = python easydb-library/tools/l10n2json.py
 
 COFFEE_FILES = \
 	src/webfrontend/EditorTagfilterDefaults.coffee
 
 all: build
 
-include ./base-plugins.make
+include easydb-library/tools/base-plugins.make
 
 build: code
 
@@ -25,4 +29,3 @@ clean: clean-base
 
 wipe: wipe-base
 
-css_ng:

@@ -1,15 +1,15 @@
-"key","de-DE","en-US","it-IT","es-ES"
-"server.config.group.system.editor.title","Editor"
-"server.config.group.system.editor.introduction","Editor Einführung"
-"server.config.name.system.editor-tagfilter-defaults","Tagfiler abhängige Voreinstellungen"
-"server.config.parameter.system.editor-tagfilter-defaults.operation.label","Operation"
-"server.config.choice.system.editor-tagfilter-defaults.operation.insert","INSERT"
-"server.config.choice.system.editor-tagfilter-defaults.operation.update","UPDATE"
-"server.config.parameter.system.editor-tagfilter-defaults.tagfilter.label","Tag-Filter"
-"server.config.parameter.system.editor-tagfilter-defaults.mask_id.label","Maske"
-"server.config.parameter.system.editor-tagfilter-defaults.default.label","Voreinstellungen"
-"server.config.parameter.system.editor-tagfilter-defaults.type.label","Typ"
-"server.config.option.system.editor-tagfilter-defaults.type.preset","Vorbelegung"
-"server.config.parameter.system.editor-tagfilter-defaults.column_id.label","Feld"
-"server.config.parameter.system.editor-tagfilter-defaults.value.label","Wert"
-"editor.tagfilter.defaults.replacement.button|text","Ersetzungen"
+key,de-DE,en-US,it-IT,es-ES
+server.config.group.system.editor.title,Editor,,,
+server.config.group.system.editor.introduction,Editor Einführung,,,
+server.config.name.system.editor-tagfilter-defaults,Tagfiler abhängige Voreinstellungen,,,
+server.config.parameter.system.editor-tagfilter-defaults.operation.label,Operation,,,
+server.config.choice.system.editor-tagfilter-defaults.operation.insert,INSERT,,,
+server.config.choice.system.editor-tagfilter-defaults.operation.update,UPDATE,,,
+server.config.parameter.system.editor-tagfilter-defaults.tagfilter.label,Tag-Filter,,,
+server.config.parameter.system.editor-tagfilter-defaults.mask_id.label,Maske,,,
+server.config.parameter.system.editor-tagfilter-defaults.default.label,Voreinstellungen,,,
+server.config.parameter.system.editor-tagfilter-defaults.type.label,Typ,,,
+server.config.option.system.editor-tagfilter-defaults.type.preset,Vorbelegung,,,
+server.config.parameter.system.editor-tagfilter-defaults.column_id.label,Feld,,,
+server.config.parameter.system.editor-tagfilter-defaults.value.label,Wert,,,
+editor.tagfilter.defaults.replacement.button|text,Ersetzungen,,,
