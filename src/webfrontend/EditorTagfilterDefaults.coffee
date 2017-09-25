@@ -191,7 +191,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 
 							# console.error "formButton", data, mask_inst, ro, rec, repl
 
-							new Tooltip
+							new CUI.Tooltip
 								on_click: true
 								element: btn
 								class: "ez5-editor-tagfilter-defaults-replacements-help"
