@@ -32,7 +32,7 @@ class EditorTagfilterDefaults extends CUI.Element
 			filters_by_mask_name[mask_name].push(filter)
 
 			if filter.tagfilter
-				if isString(filter.tagfilter)
+				if CUI.util.isString(filter.tagfilter)
 					filter.tagfilter = JSON.parse(filter.tagfilter)
 			else
 				filter.tagfilter = null
@@ -42,7 +42,7 @@ class EditorTagfilterDefaults extends CUI.Element
 
 		# console.error "filters by mask name", filters_by_mask_name
 
-		Events.listen
+		CUI.Events.listen
 			type: [
 				"editor-load"
 				"editor-tags-field-changed"
@@ -139,9 +139,9 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 					if a_ot_name == b_ot_name
 						a_mask_name = get_mask_name(a)
 						b_mask_name = get_mask_name(b)
-						return compareIndex(a_mask_name.toLocaleLowerCase(), b_mask_name.toLocaleLowerCase())
+						return CUI.util.compareIndex(a_mask_name.toLocaleLowerCase(), b_mask_name.toLocaleLowerCase())
 
-					return compareIndex(a_ot_name.toLocaleLowerCase(), b_ot_name.toLocaleLowerCase())
+					return CUI.util.compareIndex(a_ot_name.toLocaleLowerCase(), b_ot_name.toLocaleLowerCase())
 
 				mask_opts = []
 				last_ot_name = null
@@ -163,15 +163,15 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 				data = null
 
 				field =
-					type: Form
+					type: CUI.Form
 					onDataInit: (form, _data) =>
 						data = _data
 					fields: [
-						type: Select
+						type: CUI.Select
 						options: mask_opts
 						name: pname
 					,
-						type: FormButton
+						type: CUI.FormButton
 						appearance: "flat"
 						icon: ez5.loca.get_key("editor.tagfilter.defaults.replacement.button|icon")
 						text: ez5.loca.get_key("editor.tagfilter.defaults.replacement.button|text")
@@ -202,12 +202,12 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 			when "column-default-value"
 
 				field =
-					type: DataTable
+					type: CUI.DataTable
 					name: pname
 					fields: [
 						form:
 							label: $$(baseConfig.locaKey("parameter")+".type.label")
-						type: Select
+						type: CUI.Select
 						name: "action"
 						options: [
 							text: $$(baseConfig.locaKey("option")+".type.preset")
@@ -216,11 +216,11 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 					,
 						form:
 							label: $$(baseConfig.locaKey("parameter")+".column_id.label")
-						type: Select
+						type: CUI.Select
 						name: "column_id"
 						options: (df) =>
 							mask_id = df.getForm().getDataTable().getData().mask_id
-							assert(mask_id > 0, "EditorTagfilterDefaults.column-default-value", "Unable to get mask_id from data table data.", dataField: df)
+							CUI.util.assert(mask_id > 0, "EditorTagfilterDefaults.column-default-value", "Unable to get mask_id from data table data.", dataField: df)
 							mask = ez5.mask.CURRENT._mask_instance_by_name[ez5.mask.CURRENT._mask_by_id[mask_id].name]
 							opts = []
 							for field in mask.getFields("editor")
@@ -233,7 +233,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 					,
 						form:
 							label: $$(baseConfig.locaKey("parameter")+".value.label")
-						type: Input
+						type: CUI.Input
 						textarea: true
 						name: "value"
 					]
