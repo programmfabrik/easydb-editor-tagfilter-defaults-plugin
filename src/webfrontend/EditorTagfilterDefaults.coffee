@@ -203,6 +203,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 
 				field =
 					type: CUI.DataTable
+					maximize_horizontal: true
 					name: pname
 					fields: [
 						form:
