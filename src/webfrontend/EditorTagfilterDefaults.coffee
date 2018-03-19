@@ -219,6 +219,8 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 							label: $$(baseConfig.locaKey("parameter")+".column_id.label")
 						type: CUI.Select
 						name: "column_id"
+						onDataChanged: (_, selectField) =>
+							selectField.getForm().getFieldsByName("data-field-proxy")[0].reload()
 						options: (df) =>
 							mask_id = df.getForm().getDataTable().getData().mask_id
 							CUI.util.assert(mask_id > 0, "EditorTagfilterDefaults.column-default-value", "Unable to get mask_id from data table data.", dataField: df)
@@ -229,14 +231,44 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 									opts.push
 										text: field.nameLocalized()
 										value: field.id()
+										_field: field
 							opts
 
 					,
+						type: CUI.DataFieldProxy
+						call_others: false
 						form:
 							label: $$(baseConfig.locaKey("parameter")+".value.label")
-						type: CUI.Input
-						textarea: true
-						name: "value"
+						name: "data-field-proxy"
+						element: (dataField) =>
+							selectOptions = dataField.getForm().getFieldsByName("column_id")[0]?.getOptions()
+							data = dataField.getData()
+
+							findField = =>
+								for option in selectOptions
+									if option.value == data.column_id
+										return option._field
+
+							dataField = findField()
+
+							if dataField instanceof TextMultiColumn or dataField instanceof LocaTextColumn
+								if not CUI.isPlainObject(data.value)
+									data.value = {}
+
+								multiInput = new CUI.MultiInput
+									data: data
+									name: "value"
+									control: ez5.loca.getLanguageControlAdmin()
+								return multiInput.start()
+							else
+								if CUI.isPlainObject(data.value)
+									data.value = ""
+
+								input = new CUI.Input
+									textarea: true
+									data: data
+									name: "value"
+								return input.start()
 					]
 
 			when "tag-filter"
