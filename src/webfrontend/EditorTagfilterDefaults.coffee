@@ -251,7 +251,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 
 							dataField = findField()
 
-							if dataField instanceof TextMultiColumn or dataField instanceof LocaTextColumn
+							if dataField instanceof LocaTextColumn
 								if not CUI.isPlainObject(data.value)
 									data.value = {}
 
@@ -260,15 +260,23 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 									name: "value"
 									control: ez5.loca.getLanguageControlAdmin()
 								return multiInput.start()
+							else if dataField instanceof NumberColumn
+								if not CUI.util.isNumber(data.value)
+									delete data.value
+
+								numberInput = new CUI.NumberInput
+									data: data
+									name: "value"
+								return numberInput.start()
 							else
 								if CUI.isPlainObject(data.value)
 									data.value = ""
 
-								input = new CUI.Input
+								numberInput = new CUI.Input
 									textarea: true
 									data: data
 									name: "value"
-								return input.start()
+								return numberInput.start()
 					]
 
 			when "tag-filter"
