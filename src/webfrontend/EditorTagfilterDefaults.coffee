@@ -227,7 +227,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 							mask = ez5.mask.CURRENT._mask_instance_by_name[ez5.mask.CURRENT._mask_by_id[mask_id].name]
 							opts = []
 							for field in mask.getFields("editor")
-								if field instanceof TextColumn
+								if field instanceof TextColumn and not field.isReadOnly()
 									opts.push
 										text: field.nameLocalized()
 										value: field.id()
@@ -256,6 +256,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 									data.value = {}
 
 								multiInput = new CUI.MultiInput
+									textarea: (dataField instanceof LocaTextMultiColumn)
 									data: data
 									name: "value"
 									control: ez5.loca.getLanguageControlAdmin()
@@ -273,7 +274,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 									data.value = ""
 
 								numberInput = new CUI.Input
-									textarea: true
+									textarea: (dataField instanceof TextMultiColumn)
 									data: data
 									name: "value"
 								return numberInput.start()
