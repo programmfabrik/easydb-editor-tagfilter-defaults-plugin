@@ -177,8 +177,9 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 						text: ez5.loca.get_key("editor.tagfilter.defaults.replacement.button|text")
 						tooltip:
 							text: ez5.loca.get_key("editor.tagfilter.defaults.replacement.button|tooltip")
-						onClick: (ev, btn) =>
-							mask = ez5.mask.CURRENT._mask_by_id[data[pname]]
+						onClick: (ev, button) =>
+							mask_id = button.getForm().getData()[pname]
+							mask = ez5.mask.CURRENT._mask_by_id[mask_id]
 							if not mask
 								return
 							mask_inst = ez5.mask.CURRENT._mask_instance_by_name[mask.name]
@@ -193,7 +194,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 
 							new CUI.Tooltip
 								on_click: true
-								element: btn
+								element: button
 								class: "ez5-editor-tagfilter-defaults-replacements-help"
 								text: repl.join("\n")
 							.show()
@@ -294,4 +295,3 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 
 ez5.session_ready =>
 	new EditorTagfilterDefaults()
-	console.warn("EditorTagfiltetDefaults LOADED!")
