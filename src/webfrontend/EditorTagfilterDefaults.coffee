@@ -160,12 +160,8 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 						text_selected: ot_name+": "+mask_name
 						value: mask_id
 
-				data = null
-
 				field =
 					type: CUI.Form
-					onDataInit: (form, _data) =>
-						data = _data
 					fields: [
 						type: CUI.Select
 						options: mask_opts
@@ -177,11 +173,11 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 						text: ez5.loca.get_key("editor.tagfilter.defaults.replacement.button|text")
 						tooltip:
 							text: ez5.loca.get_key("editor.tagfilter.defaults.replacement.button|tooltip")
-						onClick: (ev, button) =>
-							mask_id = button.getForm().getData()[pname]
-							mask = ez5.mask.CURRENT._mask_by_id[mask_id]
+						onClick: (ev, btn) =>
+							mask = ez5.mask.CURRENT._mask_by_id[btn.getData()[pname]]
 							if not mask
 								return
+
 							mask_inst = ez5.mask.CURRENT._mask_instance_by_name[mask.name]
 							ro = new ResultObjectDemo(mask: mask_inst, format: "long", format_linked_object: "standard")
 							rec = mask_inst.getReplacementRecord(ro.getData())
