@@ -160,12 +160,30 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 						text_selected: ot_name+": "+mask_name
 						value: mask_id
 
+				toggleTagFilter = (select, data) =>
+					idMask = data[pname]
+					mask = ez5.mask.CURRENT._mask_by_id[idMask]
+					if not mask
+						return
+
+					form = select.getForm().getForm() # Parent form.
+					tagfilter = form.getFieldsByName("tagfilter")[0]
+					hasTags = ez5.schema.CURRENT._table_by_id[mask.table_id]?.has_tags
+					if hasTags
+						tagfilter.enable()
+					else
+						tagfilter.disable()
+
 				field =
 					type: CUI.Form
 					fields: [
 						type: CUI.Select
 						options: mask_opts
 						name: pname
+						onDataInit: (select, data) =>
+							toggleTagFilter(select, data)
+						onDataChanged: (_, select) ->
+							toggleTagFilter(select, select.getData())
 					,
 						type: CUI.FormButton
 						appearance: "flat"
@@ -279,12 +297,12 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 
 			when "tag-filter"
 
-				tf = new TagFilter
+				tagFilter = new TagFilter
 					tagForm: ez5.tagForm
 					name: pname
 
-				field = tf.getField()
-
+				field = tagFilter.getField()
+				field.name = pname
 
 		return field
 
