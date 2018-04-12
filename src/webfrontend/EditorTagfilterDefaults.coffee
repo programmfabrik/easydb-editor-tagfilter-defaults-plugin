@@ -191,8 +191,8 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 						text: ez5.loca.get_key("editor.tagfilter.defaults.replacement.button|text")
 						tooltip:
 							text: ez5.loca.get_key("editor.tagfilter.defaults.replacement.button|tooltip")
-						onClick: (ev, btn) =>
-							mask = ez5.mask.CURRENT._mask_by_id[btn.getData()[pname]]
+						onClick: (ev, button) =>
+							mask = ez5.mask.CURRENT._mask_by_id[button.getData()[pname]]
 							if not mask
 								return
 
