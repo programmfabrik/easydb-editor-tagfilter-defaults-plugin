@@ -116,7 +116,7 @@ class EditorTagfilterDefaults extends CUI.Element
 
 class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 
-	getFieldDefFromParm: (baseConfig, pname, def, parent_def) ->
+	getFieldDefFromParm: (baseConfig, pname, def) ->
 		console.debug "getFieldDefFromParm:", pname, def, baseConfig.locaKey("parameter")
 
 		switch def.plugin_type
@@ -220,6 +220,9 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 					type: CUI.DataTable
 					maximize_horizontal: true
 					name: pname
+					onDataInit: (_, data) =>
+						if not data[pname] or not CUI.util.isArray(data[pname])
+							data[pname] = []
 					fields: [
 						form:
 							label: $$(baseConfig.locaKey("parameter")+".type.label")
