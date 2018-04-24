@@ -119,6 +119,16 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 	getFieldDefFromParm: (baseConfig, pname, def) ->
 		console.debug "getFieldDefFromParm:", pname, def, baseConfig.locaKey("parameter")
 
+		toggleUpdateOperation = (data, dataField) ->
+			form = dataField.getForm().getForm()
+			fieldData = data["tagfilter"]
+			tagFilterField = form.getFieldsByName("tagfilter")[0]
+			operationField = form.getFieldsByName("operation")[0]
+			if CUI.util.isEmpty(fieldData) or tagFilterField.isDisabled()
+				operationField.disableOption("update")
+			else
+				operationField.enableOption("update")
+
 		switch def.plugin_type
 			when "mask-select"
 				# sort all masks by objecttype and mask
@@ -184,6 +194,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 							toggleTagFilter(select, data)
 						onDataChanged: (_, select) ->
 							toggleTagFilter(select, select.getData())
+							toggleUpdateOperation(select.getData(), select)
 					,
 						type: CUI.FormButton
 						appearance: "flat"
@@ -304,7 +315,9 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 					tagForm: ez5.tagForm
 					name: pname
 
-				field = tagFilter.getField()
+				field = tagFilter.getField
+					onDataChanged: (data, dataField) =>
+						toggleUpdateOperation(data, dataField)
 				field.name = pname
 
 		return field
