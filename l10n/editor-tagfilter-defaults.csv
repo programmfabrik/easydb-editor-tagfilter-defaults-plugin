@@ -4,7 +4,7 @@ server.config.group.system.editor.introduction,Definition vor Textvorbelegungen 
 server.config.name.system.editor-tagfilter-defaults,Tagfiler abhängige Voreinstellungen,Tagfiler dependent presets,,
 server.config.parameter.system.editor-tagfilter-defaults.operation.label,Operation,Operation,,
 server.config.choice.system.editor-tagfilter-defaults.operation.insert,NEUE,INSERT,,
-server.config.choice.system.editor-tagfilter-defaults.operation.update,AKTUALISIERUNGEN,UPDATE,,
+server.config.choice.system.editor-tagfilter-defaults.operation.update,AKTUALISIEREN,UPDATE,,
 server.config.parameter.system.editor-tagfilter-defaults.tagfilter.label,Tag-Filter,Tag filter,,
 server.config.parameter.system.editor-tagfilter-defaults.mask_id.label,Maske,Masks,,
 server.config.parameter.system.editor-tagfilter-defaults.default.label,Voreinstellungen,Default,,
