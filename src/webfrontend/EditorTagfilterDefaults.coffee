@@ -119,15 +119,26 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 	getFieldDefFromParm: (baseConfig, pname, def) ->
 		console.debug "getFieldDefFromParm:", pname, def, baseConfig.locaKey("parameter")
 
-		toggleUpdateOperation = (data, dataField) ->
-			form = dataField.getForm().getForm()
+		toggleUpdateOperation = (data, form) ->
+			parentForm = form.getForm()
 			fieldData = data["tagfilter"]
-			tagFilterField = form.getFieldsByName("tagfilter")[0]
-			operationField = form.getFieldsByName("operation")[0]
+			tagFilterField = parentForm.getFieldsByName("tagfilter")[0]
+			operationField = parentForm.getFieldsByName("operation")[0]
 			if CUI.util.isEmpty(fieldData) or tagFilterField.isDisabled()
 				operationField.disableOption("update")
 			else
 				operationField.enableOption("update")
+
+		getPresetOptions = (mask_id) ->
+			mask = ez5.mask.CURRENT._mask_instance_by_name[ez5.mask.CURRENT._mask_by_id[mask_id].name]
+			options = []
+			for field in mask.getFields("editor")
+				if field instanceof TextColumn and not field.isReadOnly()
+					options.push
+						text: field.nameLocalized()
+						value: field.id()
+						_field: field
+			return options
 
 		switch def.plugin_type
 			when "mask-select"
@@ -156,9 +167,13 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 				mask_opts = []
 				last_ot_name = null
 
-				for mask_id in mask_ids
-					ot_name = get_ot_name(mask_id)
-					mask_name = get_mask_name(mask_id)
+				for idMask in mask_ids
+					options = getPresetOptions(idMask)
+					if options.length == 0
+						continue
+
+					ot_name = get_ot_name(idMask)
+					mask_name = get_mask_name(idMask)
 
 					if last_ot_name != ot_name
 						mask_opts.push
@@ -168,7 +183,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 					mask_opts.push
 						text: mask_name
 						text_selected: ot_name+": "+mask_name
-						value: mask_id
+						value: idMask
 
 				toggleTagFilter = (select, data) =>
 					idMask = data[pname]
@@ -186,6 +201,8 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 
 				field =
 					type: CUI.Form
+					onRender: (form) =>
+						toggleUpdateOperation(form.getData()["tagfilter"], form)
 					fields: [
 						type: CUI.Select
 						options: mask_opts
@@ -194,7 +211,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 							toggleTagFilter(select, data)
 						onDataChanged: (_, select) ->
 							toggleTagFilter(select, select.getData())
-							toggleUpdateOperation(select.getData()["tagfilter"], select)
+							toggleUpdateOperation(select.getData()["tagfilter"], select.getForm())
 					,
 						type: CUI.FormButton
 						appearance: "flat"
@@ -253,15 +270,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 						options: (df) =>
 							mask_id = df.getForm().getDataTable().getData().mask_id
 							CUI.util.assert(mask_id > 0, "EditorTagfilterDefaults.column-default-value", "Unable to get mask_id from data table data.", dataField: df)
-							mask = ez5.mask.CURRENT._mask_instance_by_name[ez5.mask.CURRENT._mask_by_id[mask_id].name]
-							opts = []
-							for field in mask.getFields("editor")
-								if field instanceof TextColumn and not field.isReadOnly()
-									opts.push
-										text: field.nameLocalized()
-										value: field.id()
-										_field: field
-							opts
+							return getPresetOptions(mask_id)
 
 					,
 						type: CUI.DataFieldProxy
@@ -317,7 +326,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 
 				field = tagFilter.getField
 					onDataChanged: (data, dataField) =>
-						toggleUpdateOperation(data, dataField)
+						toggleUpdateOperation(data, dataField.getForm())
 				field.name = pname
 
 		return field
