@@ -194,7 +194,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 							toggleTagFilter(select, data)
 						onDataChanged: (_, select) ->
 							toggleTagFilter(select, select.getData())
-							toggleUpdateOperation(select.getData(), select)
+							toggleUpdateOperation(select.getData()["tagfilter"], select)
 					,
 						type: CUI.FormButton
 						appearance: "flat"
