@@ -75,14 +75,19 @@ class EditorTagfilterDefaults extends CUI.Element
 					@applyFilter(ev, info, apply_filter)
 				return
 
-
-	applyFilter: (ev, info, filter) ->
+	# filterData =
+	#  default: [preset_object]
+	#  mask_id: Number
+	#  operation: [String]
+	#  tagfilter:
+	#    tagfilter: {all: {..}, ..}
+	applyFilter: (ev, info, filterData) ->
 		obj = info.object or info.new_object
 
 		if not obj
 			return
 
-		tagfilter_ok = TagFilter.matchesTags(filter.tagfilter, obj.getData()._tags)
+		tagfilter_ok = TagFilter.matchesTags(filterData.tagfilter.tagfilter, obj.getData()._tags)
 
 		find_field = (column_id) =>
 			for field in info.object.mask.getFields("all")
@@ -94,8 +99,8 @@ class EditorTagfilterDefaults extends CUI.Element
 
 			return
 
-		if filter.default?.length > 0
-			for rule, idx in filter.default
+		if filterData.default?.length > 0
+			for rule, idx in filterData.default
 				rule._idx = idx
 				rule._tagfilter_match = tagfilter_ok
 				switch rule.action
