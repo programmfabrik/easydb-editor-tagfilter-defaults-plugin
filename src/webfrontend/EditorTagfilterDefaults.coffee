@@ -107,7 +107,7 @@ class EditorTagfilterDefaults extends CUI.Element
 					when "preset"
 						field = find_field(rule.column_id)
 						if not field
-							console.error("EditorTagfilterDefaults: Skipping unknown field: "+column_id)
+							console.error("EditorTagfilterDefaults: Skipping unknown field: " + rule.column_id)
 						else
 							field.updateEditorInputValue(ev, rule, info.object.getData())
 					else
