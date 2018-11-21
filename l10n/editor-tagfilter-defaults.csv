@@ -1,7 +1,7 @@
 key,de-DE,en-US,it-IT,es-ES
 server.config.group.system.editor.title,Editor,Editor,,
 server.config.group.system.editor.introduction,Definition vor Textvorbelegungen in Feldern beim Erstellen oder Aktualisieren von Datensätzen.,Definition of text presets in fields when creating or updating records.,,
-server.config.name.system.editor-tagfilter-defaults,Tagfiler abhängige Voreinstellungen,Tagfiler dependent presets,,
+server.config.name.system.editor-tagfilter-defaults,Tag-Filter-abhängige Voreinstellungen,Tag filter dependent presets,,
 server.config.parameter.system.editor-tagfilter-defaults.operation.label,Operation,Operation,,
 server.config.choice.system.editor-tagfilter-defaults.operation.insert,Neue,Insert,,
 server.config.choice.system.editor-tagfilter-defaults.operation.update,Aktualisieren,Update,,
