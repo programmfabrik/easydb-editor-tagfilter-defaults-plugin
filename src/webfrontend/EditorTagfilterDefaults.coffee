@@ -122,8 +122,6 @@ class EditorTagfilterDefaults extends CUI.Element
 class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 
 	getFieldDefFromParm: (baseConfig, pname, def) ->
-		console.debug "getFieldDefFromParm:", pname, def, baseConfig.locaKey("parameter")
-
 		toggleUpdateOperation = (data, form) ->
 			parentForm = form.getForm()
 			fieldData = data["tagfilter"]
