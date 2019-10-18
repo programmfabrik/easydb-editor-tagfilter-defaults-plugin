@@ -273,7 +273,10 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 						options: (df) =>
 							mask_id = df.getForm().getDataTable().getData().mask_id
 							CUI.util.assert(mask_id > 0, "EditorTagfilterDefaults.column-default-value", "Unable to get mask_id from data table data.", dataField: df)
-							return getPresetOptions(mask_id)
+							if ez5.mask.CURRENT._mask_by_id[mask_id]
+								return getPresetOptions(mask_id)
+							else
+								return []
 
 					,
 						type: CUI.DataFieldProxy
