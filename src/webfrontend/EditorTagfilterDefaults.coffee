@@ -136,7 +136,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 			mask = ez5.mask.CURRENT._mask_instance_by_name[ez5.mask.CURRENT._mask_by_id[mask_id].name]
 			options = []
 			for field in mask.getFields("editor")
-				if field instanceof TextColumn and not field.isReadOnly()
+				if field instanceof TextColumn
 					options.push
 						text: field.nameLocalized()
 						value: field.id()
