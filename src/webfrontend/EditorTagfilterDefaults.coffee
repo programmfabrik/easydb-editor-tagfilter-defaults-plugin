@@ -50,10 +50,14 @@ class EditorTagfilterDefaults extends CUI.Element
 
 			call: (ev, info) =>
 
-				apply_filters =  filters_by_mask_name[ info.editor_data.mask_name ]
+				applyFilters =  filters_by_mask_name[ info.editor_data.mask_name ]
 				# console.error "add new result object", ev, info, info.editor_data.mask_name, apply_filters
 
-				if not apply_filters
+				if not applyFilters
+					return
+
+				object = info.object or info.new_object
+				if not object
 					return
 
 				switch info.editor.getMode()
@@ -68,29 +72,24 @@ class EditorTagfilterDefaults extends CUI.Element
 							# only execute when in "new" mode
 							return
 
-				for apply_filter in apply_filters
-					if operation not in apply_filter.operation
-						continue
-
-					@applyFilter(ev, info, apply_filter)
+				applyFilters = applyFilters.filter((applyFilter) ->
+					operation in applyFilter.operation and applyFilter.default?.length > 0
+				)
+				@applyFilter(ev, object, applyFilters)
 				return
 
-	# filterData =
+	# filter =
 	#  default: [preset_object]
 	#  mask_id: Number
 	#  operation: [String]
 	#  tagfilter:
 	#    tagfilter: {all: {..}, ..}
-	applyFilter: (ev, info, filterData) ->
-		obj = info.object or info.new_object
-
-		if not obj
-			return
-
-		tagfilter_ok = TagFilter.matchesTags(filterData.tagfilter.tagfilter, obj.getData()._tags)
+	applyFilter: (ev, object, applyFilters) ->
+		fields = object.mask.getFields("all")
+		filtersByField = {}
 
 		find_field = (column_id) =>
-			for field in info.object.mask.getFields("all")
+			for field in fields
 				if field instanceof MaskSplitter
 					continue
 
@@ -99,8 +98,10 @@ class EditorTagfilterDefaults extends CUI.Element
 
 			return
 
-		if filterData.default?.length > 0
-			for rule, idx in filterData.default
+		for applyFilter in applyFilters
+			tagfilter_ok = TagFilter.matchesTags(applyFilter.tagfilter.tagfilter, object.getData()._tags)
+
+			for rule, idx in applyFilter.default
 				rule._idx = idx
 				rule._tagfilter_match = tagfilter_ok
 				switch rule.action
@@ -108,16 +109,29 @@ class EditorTagfilterDefaults extends CUI.Element
 						field = find_field(rule.column_id)
 						if not field
 							console.error("EditorTagfilterDefaults: Skipping unknown field: " + rule.column_id)
-						else
-							field.updateEditorInputValue(ev, rule, info.object.getData())
+							continue
+
+						if not filtersByField[field.id()]
+							filtersByField[field.id()] =
+								field: field
+								rules: []
+						filtersByField[field.id()].rules.push(rule)
 					else
 						console.error("EditorTagfilterDefaults: Skipping unknown action: "+rule.action)
 
+		for _, filterByField of filtersByField
+			matchRules = filterByField.rules.filter((rule) -> rule._tagfilter_match)
+			unmatchedRules = filterByField.rules.filter((rule) -> not rule._tagfilter_match)
+
+			if unmatchedRules.length == filterByField.rules.length
+				for rule in unmatchedRules
+					filterByField.field.emptyEditorInputValue(rule.value, object.getData())
+				continue
+
+			for rule in matchRules
+				filterByField.field.updateEditorInputValue(rule.value, object.getData())
+
 		return
-
-
-
-
 
 class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 
