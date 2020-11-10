@@ -49,7 +49,6 @@ class EditorTagfilterDefaults extends CUI.Element
 			]
 
 			call: (ev, info) =>
-
 				applyFilters =  filters_by_mask_name[ info.editor_data.mask_name ]
 				# console.error "add new result object", ev, info, info.editor_data.mask_name, apply_filters
 
@@ -75,7 +74,9 @@ class EditorTagfilterDefaults extends CUI.Element
 				applyFilters = applyFilters.filter((applyFilter) ->
 					operation in applyFilter.operation and applyFilter.default?.length > 0
 				)
-				@applyFilter(ev, object, applyFilters)
+				if applyFilters.length > 0
+					@applyFilters(object, applyFilters)
+					info.editor?.reloadEditor()
 				return
 
 	# filter =
@@ -84,7 +85,7 @@ class EditorTagfilterDefaults extends CUI.Element
 	#  operation: [String]
 	#  tagfilter:
 	#    tagfilter: {all: {..}, ..}
-	applyFilter: (ev, object, applyFilters) ->
+	applyFilters: (object, applyFilters) ->
 		fields = object.mask.getFields("all")
 		filtersByField = {}
 
