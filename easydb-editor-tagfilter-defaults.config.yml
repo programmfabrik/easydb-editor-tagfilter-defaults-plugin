@@ -1,5 +1,5 @@
 plugin:
-  name: editor-tagfilter-defaults
+  name: easydb-editor-tagfilter-defaults-plugin
   version: 1.0
   vendor: Programmfabrik GmbH
   server:
