@@ -1,4 +1,6 @@
 PLUGIN_NAME = editor-tagfilter-defaults
+PLGUIN_PATH = easydb-editor-tagfilter-defaults-plugin
+
 INSTALL_FILES = \
 	$(WEB)/l10n/cultures.json \
 	$(WEB)/l10n/de-DE.json \
