@@ -8,7 +8,7 @@ INSTALL_FILES = \
 	$(WEB)/l10n/es-ES.json \
 	$(WEB)/l10n/it-IT.json \
 	$(WEB)/editor-tagfilter-defaults.js \
-	easydb-editor-tagfilter-defaults.config.yml
+	manifest.yml
 
 L10N_FILES = l10n/editor-tagfilter-defaults.csv
 L10N_GOOGLE_KEY = 1Z3UPJ6XqLBp-P8SUf-ewq4osNJ3iZWKJB83tc6Wrfn0
