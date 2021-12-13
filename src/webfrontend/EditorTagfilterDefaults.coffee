@@ -352,6 +352,5 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 
 		return field
 
-
-ez5.session_ready =>
+ez5.defaults_done ->
 	new EditorTagfilterDefaults()
