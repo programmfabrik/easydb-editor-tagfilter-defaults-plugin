@@ -11,7 +11,9 @@ class EditorTagfilterDefaults extends CUI.Element
 		BaseConfig.registerPlugin(new BaseConfigEditorTagfilterDefaults())
 
 		filters_by_mask_name = {}
-		filters = ez5.session.getBaseConfig().system["editor-tagfilter-defaults"]?.filters or []
+		baseConfig = ez5.session.getBaseConfig()
+		baseConfig = baseConfig.system or baseConfig # TODO: Remove this after #64076 is merged.
+		filters = baseConfig["editor-tagfilter-defaults"]?.filters or []
 
 		if not filters
 			return
