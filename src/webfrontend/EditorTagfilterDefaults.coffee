@@ -11,7 +11,7 @@ class EditorTagfilterDefaults extends CUI.Element
 		BaseConfig.registerPlugin(new BaseConfigEditorTagfilterDefaults())
 
 		filters_by_mask_name = {}
-		baseConfig = ez5.session.getBaseConfig()
+		baseConfig = ez5.session.getBaseConfig("plugin", "easydb-editor-tagfilter-defaults-plugin")
 		baseConfig = baseConfig.system or baseConfig # TODO: Remove this after #64076 is merged.
 		filters = baseConfig["editor-tagfilter-defaults"]?.filters or []
 
