@@ -18,3 +18,4 @@ server.config.parameter.system.editor-tagfilter-defaults.operation.label,Operati
 server.config.parameter.system.editor-tagfilter-defaults.tagfilter.label,Tag-Filter,Tag filter,Tag filter,Tunnistesuodatin,Tag filter,,
 server.config.parameter.system.editor-tagfilter-defaults.type.label,Typ,Type,Type,Tyyppi,Type,,
 server.config.parameter.system.editor-tagfilter-defaults.value.label,Wert,Value,Value,Arvo,Value,,
+server.config.group.system.plugin_easydb-editor-tagfilter-defaults-plugin.title,Tag-Filter-abhängige Voreinstellungen,Tag filter dependent presets,Tag filter dependent presets,Tag filter dependent presets,Tag filter dependent presets,,
