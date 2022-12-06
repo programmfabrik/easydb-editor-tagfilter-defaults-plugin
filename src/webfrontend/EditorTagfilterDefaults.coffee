@@ -39,6 +39,12 @@ class EditorTagfilterDefaults extends CUI.Element
 			else
 				filter.tagfilter = null
 
+			if filter.pool_id
+				if CUI.util.isString(filter.pool_id)
+					filter.pool_id = JSON.parse(filter.pool_id)
+			else
+				filter.pool_id = {ids:[]}
+
 			filter.default = JSON.parse(filter.default)
 
 
@@ -48,9 +54,14 @@ class EditorTagfilterDefaults extends CUI.Element
 			type: [
 				"editor-load"
 				"editor-tags-field-changed"
+				"pool-field-changed"
 			]
 
 			call: (ev, info) =>
+
+				if not info.editor_data
+					return
+
 				applyFilters =  filters_by_mask_name[ info.editor_data.mask_name ]
 				# console.error "add new result object", ev, info, info.editor_data.mask_name, apply_filters
 
@@ -76,8 +87,11 @@ class EditorTagfilterDefaults extends CUI.Element
 				applyFilters = applyFilters.filter((applyFilter) ->
 					operation in applyFilter.operation and applyFilter.default?.length > 0
 				)
+
+				objectPool = info.new_pool or info.editor_data?._pool;
+
 				if applyFilters.length > 0
-					@applyFilters(object, applyFilters)
+					@applyFilters(object, objectPool, applyFilters)
 					info.editor?.reloadEditor()
 				return
 
@@ -87,7 +101,7 @@ class EditorTagfilterDefaults extends CUI.Element
 	#  operation: [String]
 	#  tagfilter:
 	#    tagfilter: {all: {..}, ..}
-	applyFilters: (object, applyFilters) ->
+	applyFilters: (object, objectPool, applyFilters) ->
 		fields = object.mask.getFields("all")
 		filtersByField = {}
 
@@ -103,6 +117,17 @@ class EditorTagfilterDefaults extends CUI.Element
 
 		for applyFilter in applyFilters
 			tagfilter_ok = TagFilter.matchesTags(applyFilter.tagfilter.tagfilter, object.getData()._tags)
+
+			#If we have pools set in the filter and the object has a pool set:
+			if applyFilter.pool_id.ids.length > 0 and objectPool
+				matchPool = false
+				for filterPoolId in applyFilter.pool_id.ids
+					if parseInt(filterPoolId) == objectPool.pool._id
+						matchPool = true
+						break
+				if not matchPool
+					console.log "No se encontro ninguna pool"
+					continue
 
 			for rule, idx in applyFilter.default
 				rule._idx = idx
@@ -139,12 +164,16 @@ class EditorTagfilterDefaults extends CUI.Element
 class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 
 	getFieldDefFromParm: (baseConfig, pname, def) ->
+
 		toggleUpdateOperation = (data, form) ->
-			parentForm = form.getForm()
-			fieldData = data["tagfilter"]
+			parentForm = form.getForm() or form
+			fieldData = data["tagfilter"]["tagfilter"]
 			tagFilterField = parentForm.getFieldsByName("tagfilter")[0]
 			operationField = parentForm.getFieldsByName("operation")[0]
-			if CUI.util.isEmpty(fieldData) or tagFilterField.isDisabled()
+			nPoolIds = data?.pool_id?.ids?.length or 0
+			if nPoolIds > 0
+				operationField.enableOption("update")
+			else if CUI.util.isEmpty(fieldData) or tagFilterField.isDisabled()
 				operationField.disableOption("update")
 			else
 				operationField.enableOption("update")
@@ -222,7 +251,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 				field =
 					type: CUI.Form
 					onRender: (form) =>
-						toggleUpdateOperation(form.getData()["tagfilter"], form)
+						toggleUpdateOperation(form.getData(), form)
 					fields: [
 						type: CUI.Select
 						options: mask_opts
@@ -231,7 +260,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 							toggleTagFilter(select, data)
 						onDataChanged: (_, select) ->
 							toggleTagFilter(select, select.getData())
-							toggleUpdateOperation(select.getData()["tagfilter"], select.getForm())
+							toggleUpdateOperation(select.getData(), select.getForm())
 					,
 						type: CUI.FormButton
 						appearance: "flat"
@@ -349,10 +378,74 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 
 				field = tagFilter.getField
 					onDataChanged: (data, dataField) =>
-						toggleUpdateOperation(data, dataField.getForm())
+						tagFilterData =
+							tagfilter : data
+						toggleUpdateOperation(tagFilterData, dataField.getForm())
 				field.name = pname
 
+			when "pool-select"
+
+				field =
+					type: CUI.DataFieldProxy
+					call_others: false
+					name: pname
+					element: (dataField) =>
+
+						getPoolBtnText = (data) ->
+							if data?.ids?.length > 0
+								return $$("admin.message.pools.button.selected", count: data.ids.length)
+							else
+								return $$("admin.message.pools.button")
+
+						formButton = new CUI.FormButton
+							text: getPoolBtnText(dataField.getData().pool_id)
+							active: dataField.getData().pool_id?.ids?.length > 0
+							onClick: () =>
+								poolData = () => dataField.getData();
+								temporalData = CUI.util.copyObject(poolData().pool_id,true) or {}
+								@__pools_form = new PoolsForm
+									data: temporalData
+									treeOpts:
+										class: 'cui-lv--has-datafields'
+										maximize: false
+										rowMove: false
+										cols: ["auto"]
+
+								doneButton = new CUI.Button
+									text: $$("base.done")
+									primary: true
+									onClick: (ev) =>
+										poolData().pool_id = @__pools_form.getSaveData()
+										poolFormModal.destroy()
+										formButton.setText(getPoolBtnText(dataField.getData().pool_id))
+										if dataField.getData().pool_id?.ids?.length > 0
+											formButton.activate()
+										else
+											formButton.deactivate()
+										toggleUpdateOperation(dataField.getData(), dataField.getForm())
+
+								cancelButton = new CUI.Button
+									text: $$("base.abort")
+									onClick: (ev) =>
+										poolFormModal.destroy()
+
+								poolFormModal = new CUI.Modal
+									class: "cui-pools-form"
+									cancel: true
+									pane:
+										header_left: new CUI.Label
+											text: $$("admin.message.pools.pools_form.title")
+										content: @__pools_form.renderForm()
+										footer_right: [cancelButton, doneButton]
+									onDestroy: =>
+										onClose?()
+										return
+								poolFormModal.show()
+
+						formButton.start()
+
 		return field
+
 
 ez5.defaults_done ->
 	new EditorTagfilterDefaults()

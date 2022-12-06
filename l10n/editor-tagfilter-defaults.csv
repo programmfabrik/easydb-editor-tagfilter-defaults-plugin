@@ -4,6 +4,7 @@ server.config.choice.system.editor-tagfilter-defaults.operation.insert,Neue,Inse
 server.config.choice.system.editor-tagfilter-defaults.operation.update,Aktualisieren,Update,Update,Päivitä,Update,,
 server.config.group.system.editor.introduction,Definition vor Textvorbelegungen in Feldern beim Erstellen oder Aktualisieren von Datensätzen.,Definition of text presets in fields when creating or updating records.,Definition of text presets in fields when creating or updating records.,Tekstien esiasetusten määrittely kentissä tietueita luotaessa tai päivitettäessä.,Definition of text presets in fields when creating or updating records.,,
 server.config.group.system.editor.title,Editor,Editor,Editor,Editori,Editor,,
+server.config.group.system.plugin_easydb-editor-tagfilter-defaults-plugin.title,Tag-Filter-abhängige Voreinstellungen,Tag filter dependent presets,Tag filter dependent presets,Tunnistesuodattimesta riippuvat esiasetukset,Tag filter dependent presets,,
 server.config.name.system.editor-tagfilter-defaults,Tag-Filter-abhängige Voreinstellungen,Tag filter dependent presets,Tag filter dependent presets,Tunnistesuodattimesta riippuvat esiasetukset,Tag filter dependent presets,,
 server.config.option.system.editor-tagfilter-defaults.type.preset,Vorbelegung,Preset,Preset,Esiasetus,Preset,,
 server.config.parameter.system.editor-tagfilter-defaults.column_id.label,Feld,Field,Field,Kenttä,Field,,
@@ -18,4 +19,4 @@ server.config.parameter.system.editor-tagfilter-defaults.operation.label,Operati
 server.config.parameter.system.editor-tagfilter-defaults.tagfilter.label,Tag-Filter,Tag filter,Tag filter,Tunnistesuodatin,Tag filter,,
 server.config.parameter.system.editor-tagfilter-defaults.type.label,Typ,Type,Type,Tyyppi,Type,,
 server.config.parameter.system.editor-tagfilter-defaults.value.label,Wert,Value,Value,Arvo,Value,,
-server.config.group.system.plugin_easydb-editor-tagfilter-defaults-plugin.title,Tag-Filter-abhängige Voreinstellungen,Tag filter dependent presets,Tag filter dependent presets,Tag filter dependent presets,Tag filter dependent presets,,
+server.config.parameter.system.editor-tagfilter-defaults.filters.pool_id.label,Pools Filter,Pools Filter,Pools Filter,Pools Filter,Pools Filter,,

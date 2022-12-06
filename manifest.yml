@@ -1,6 +1,6 @@
 plugin:
   name: easydb-editor-tagfilter-defaults-plugin
-  version: 1.0
+  version: 1.1
   vendor: Programmfabrik GmbH
   server:
     api-version:
@@ -27,14 +27,19 @@ base_config:
             type: "int"
             plugin_type: "mask-select"
             position: 1
+          - name: "pool_id"
+            type: "text"
+            store_as_json: true
+            plugin_type: "pool-select"
+            position: 2
           - name: "tagfilter"
             type: "text"
             store_as_json: true
             plugin_type: "tag-filter"
-            position: 2
+            position: 3
           - name: "default"
             type: "text"
             store_as_json: true
             plugin_type: "column-default-value"
-            position: 3
+            position: 4
         position: 0
