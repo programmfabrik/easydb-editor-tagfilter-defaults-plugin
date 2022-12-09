@@ -422,6 +422,9 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 											formButton.activate()
 										else
 											formButton.deactivate()
+										CUI.Events.trigger
+											node: formButton
+											type: "data-changed"
 										toggleUpdateOperation(dataField.getData(), dataField.getForm())
 
 								cancelButton = new CUI.Button
