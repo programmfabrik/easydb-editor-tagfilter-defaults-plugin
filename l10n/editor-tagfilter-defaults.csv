@@ -1,22 +1,22 @@
-key,de-DE,en-US,da-DK,fi-FI,sv-SE,it-IT,es-ES
-editor.tagfilter.defaults.replacement.button|text,Ersetzungen anzeigen,Show replacement,Show replacement,Näytä korvaukset,Visa ersättare,,
-server.config.choice.system.editor-tagfilter-defaults.operation.insert,Neue,Insert,Insert,Lisää,Ny,,
-server.config.choice.system.editor-tagfilter-defaults.operation.update,Aktualisieren,Update,Update,Päivitä,Uppdatera,,
-server.config.group.system.editor.introduction,Definition vor Textvorbelegungen in Feldern beim Erstellen oder Aktualisieren von Datensätzen.,Definition of text presets in fields when creating or updating records.,Definition of text presets in fields when creating or updating records.,Tekstien esiasetusten määrittely kentissä tietueita luotaessa tai päivitettäessä.,Definition av textförinställningar i fält vid skapande eller uppdatering av poster.,,
-server.config.group.system.editor.title,Editor,Editor,Editor,Editori,Editor,,
-server.config.group.system.plugin_easydb-editor-tagfilter-defaults-plugin.title,Tag-Filter-abhängige Voreinstellungen,Tag filter dependent presets,Tag filter dependent presets,Tunnistesuodattimesta riippuvat esiasetukset,Taggfilterberoende förinställningar,,
-server.config.name.system.editor-tagfilter-defaults,Tag-Filter-abhängige Voreinstellungen,Tag filter dependent presets,Tag filter dependent presets,Tunnistesuodattimesta riippuvat esiasetukset,Taggfilterberoende förinställningar,,
-server.config.option.system.editor-tagfilter-defaults.type.preset,Vorbelegung,Preset,Preset,Esiasetus,Förinställning,,
-server.config.parameter.system.editor-tagfilter-defaults.column_id.label,Feld,Field,Field,Kenttä,Fält,,
-server.config.parameter.system.editor-tagfilter-defaults.default.label,Voreinstellungen,Default,Default,Oletus,Standard,,
-server.config.parameter.system.editor-tagfilter-defaults.filters.default.label,Vorbelegung,Default,Default,Oletus,Standard,,
-server.config.parameter.system.editor-tagfilter-defaults.filters.label,Konfiguration,Configuration,Configuration,Konfiguraatio,Konfiguration,,
-server.config.parameter.system.editor-tagfilter-defaults.filters.mask_id.label,Maske,Masks,Masks,Maskit,Masker,,
-server.config.parameter.system.editor-tagfilter-defaults.filters.operation.label,Aktion,Action,Action,Toiminto,Handling,,
-server.config.parameter.system.editor-tagfilter-defaults.filters.tagfilter.label,Tag-Filter,Tag filter,Tag filter,Tunnistesuodatin,Taggfilter,,
-server.config.parameter.system.editor-tagfilter-defaults.mask_id.label,Maske,Masks,Masks,Maskit,Masker,,
-server.config.parameter.system.editor-tagfilter-defaults.operation.label,Operation,Operation,Operation,Toiminto,Operation,,
-server.config.parameter.system.editor-tagfilter-defaults.tagfilter.label,Tag-Filter,Tag filter,Tag filter,Tunnistesuodatin,Taggfilter,,
-server.config.parameter.system.editor-tagfilter-defaults.type.label,Typ,Type,Type,Tyyppi,Typ,,
-server.config.parameter.system.editor-tagfilter-defaults.value.label,Wert,Value,Value,Arvo,Värde,,
-server.config.parameter.system.editor-tagfilter-defaults.filters.pool_id.label,Pools Filter,Pools Filter,Pools Filter,Pools Filter,Poolfilter,,
+key,de-DE,R,en-US,R,da-DK,R,fi-FI,R,sv-SE,R,fr-FR,R,it-IT,R,es-ES,R
+editor.tagfilter.defaults.replacement.button|text,Ersetzungen anzeigen,FALSE,Show replacement,FALSE,Show replacement,FALSE,Näytä korvaukset,FALSE,Visa ersättare,FALSE,,FALSE,,FALSE,,FALSE
+server.config.choice.system.editor-tagfilter-defaults.operation.insert,Neue,FALSE,Insert,FALSE,Insert,FALSE,Lisää,FALSE,Ny,FALSE,,FALSE,,FALSE,,FALSE
+server.config.choice.system.editor-tagfilter-defaults.operation.update,Aktualisieren,FALSE,Update,FALSE,Update,FALSE,Päivitä,FALSE,Uppdatera,FALSE,,FALSE,,FALSE,,FALSE
+server.config.group.system.editor.introduction,Definition vor Textvorbelegungen in Feldern beim Erstellen oder Aktualisieren von Datensätzen.,FALSE,Definition of text presets in fields when creating or updating records.,FALSE,Definition of text presets in fields when creating or updating records.,FALSE,Tekstien esiasetusten määrittely kentissä tietueita luotaessa tai päivitettäessä.,FALSE,Definition av textförinställningar i fält vid skapande eller uppdatering av poster.,FALSE,,FALSE,,FALSE,,FALSE
+server.config.group.system.editor.title,Editor,FALSE,Editor,FALSE,Editor,FALSE,Editori,FALSE,Editor,FALSE,,FALSE,,FALSE,,FALSE
+server.config.group.system.plugin_easydb-editor-tagfilter-defaults-plugin.title,Tag-Filter-abhängige Voreinstellungen,FALSE,Tag filter dependent presets,FALSE,Tag filter dependent presets,FALSE,Tunnistesuodattimesta riippuvat esiasetukset,FALSE,Taggfilterberoende förinställningar,FALSE,,FALSE,,FALSE,,FALSE
+server.config.name.system.editor-tagfilter-defaults,Tag-Filter-abhängige Voreinstellungen,FALSE,Tag filter dependent presets,FALSE,Tag filter dependent presets,FALSE,Tunnistesuodattimesta riippuvat esiasetukset,FALSE,Taggfilterberoende förinställningar,FALSE,,FALSE,,FALSE,,FALSE
+server.config.option.system.editor-tagfilter-defaults.type.preset,Vorbelegung,FALSE,Preset,FALSE,Preset,FALSE,Esiasetus,FALSE,Förinställning,FALSE,,FALSE,,FALSE,,FALSE
+server.config.parameter.system.editor-tagfilter-defaults.column_id.label,Feld,FALSE,Field,FALSE,Field,FALSE,Kenttä,FALSE,Fält,FALSE,,FALSE,,FALSE,,FALSE
+server.config.parameter.system.editor-tagfilter-defaults.default.label,Voreinstellungen,FALSE,Default,FALSE,Default,FALSE,Oletus,FALSE,Standard,FALSE,,FALSE,,FALSE,,FALSE
+server.config.parameter.system.editor-tagfilter-defaults.filters.default.label,Vorbelegung,FALSE,Default,FALSE,Default,FALSE,Oletus,FALSE,Standard,FALSE,,FALSE,,FALSE,,FALSE
+server.config.parameter.system.editor-tagfilter-defaults.filters.label,Konfiguration,FALSE,Configuration,FALSE,Configuration,FALSE,Konfiguraatio,FALSE,Konfiguration,FALSE,,FALSE,,FALSE,,FALSE
+server.config.parameter.system.editor-tagfilter-defaults.filters.mask_id.label,Maske,FALSE,Masks,FALSE,Masks,FALSE,Maskit,FALSE,Masker,FALSE,,FALSE,,FALSE,,FALSE
+server.config.parameter.system.editor-tagfilter-defaults.filters.operation.label,Aktion,FALSE,Action,FALSE,Action,FALSE,Toiminto,FALSE,Handling,FALSE,,FALSE,,FALSE,,FALSE
+server.config.parameter.system.editor-tagfilter-defaults.filters.tagfilter.label,Tag-Filter,FALSE,Tag filter,FALSE,Tag filter,FALSE,Tunnistesuodatin,FALSE,Taggfilter,FALSE,,FALSE,,FALSE,,FALSE
+server.config.parameter.system.editor-tagfilter-defaults.mask_id.label,Maske,FALSE,Masks,FALSE,Masks,FALSE,Maskit,FALSE,Masker,FALSE,,FALSE,,FALSE,,FALSE
+server.config.parameter.system.editor-tagfilter-defaults.operation.label,Operation,FALSE,Operation,FALSE,Operation,FALSE,Toiminto,FALSE,Operation,FALSE,,FALSE,,FALSE,,FALSE
+server.config.parameter.system.editor-tagfilter-defaults.tagfilter.label,Tag-Filter,FALSE,Tag filter,FALSE,Tag filter,FALSE,Tunnistesuodatin,FALSE,Taggfilter,FALSE,,FALSE,,FALSE,,FALSE
+server.config.parameter.system.editor-tagfilter-defaults.type.label,Typ,FALSE,Type,FALSE,Type,FALSE,Tyyppi,FALSE,Typ,FALSE,,FALSE,,FALSE,,FALSE
+server.config.parameter.system.editor-tagfilter-defaults.value.label,Wert,FALSE,Value,FALSE,Value,FALSE,Arvo,FALSE,Värde,FALSE,,FALSE,,FALSE,,FALSE
+server.config.parameter.system.editor-tagfilter-defaults.filters.pool_id.label,Pools Filter,FALSE,Pools Filter,FALSE,Pools Filter,FALSE,Pools Filter,FALSE,Poolfilter,FALSE,,FALSE,,FALSE,,FALSE
