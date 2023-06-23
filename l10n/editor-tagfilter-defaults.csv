@@ -19,10 +19,6 @@ server.config.parameter.system.editor-tagfilter-defaults.operation.label,Operati
 server.config.parameter.system.editor-tagfilter-defaults.tagfilter.label,Tag-Filter,FALSE,Tag filter,FALSE,Tag filter,FALSE,Tunnistesuodatin,FALSE,Taggfilter,FALSE,,FALSE,,FALSE,,FALSE
 server.config.parameter.system.editor-tagfilter-defaults.type.label,Typ,FALSE,Type,FALSE,Type,FALSE,Tyyppi,FALSE,Typ,FALSE,,FALSE,,FALSE,,FALSE
 server.config.parameter.system.editor-tagfilter-defaults.value.label,Wert,FALSE,Value,FALSE,Value,FALSE,Arvo,FALSE,Värde,FALSE,,FALSE,,FALSE,,FALSE
-<<<<<<< HEAD
-server.config.parameter.system.editor-tagfilter-defaults.filters.pool_id.label,Pools Filter,FALSE,Pools Filter,FALSE,Pools Filter,FALSE,Pools Filter,FALSE,Poolfilter,FALSE,,FALSE,,FALSE,,FALSE
-=======
 server.config.parameter.system.editor-tagfilter-defaults.filters.pool_id.label,Pools Filter,FALSE,Pools Filter,FALSE,Pools Filter,FALSE,Pools Filter,FALSE,Poolfilter,FALSE,,FALSE,,FALSE,,FALSE
 server.config.parameter.system.editor-tagfilter-defaults.date.replacement.today|text,Today,TRUE,Today,TRUE,Today,TRUE,Today,TRUE,Today,TRUE,,FALSE,,FALSE,,FALSE
 server.config.parameter.system.editor-tagfilter-defaults.date.replacement.today|tooltip,The used value will be the current date when this replacement is used.,TRUE,The used value will be the current date when this replacement is used.,TRUE,The used value will be the current date when this replacement is used.,TRUE,The used value will be the current date when this replacement is used.,TRUE,The used value will be the current date when this replacement is used.,TRUE,,FALSE,,FALSE,,FALSE
->>>>>>> 0189839 (- Add support for date fields and datetime fields.)
