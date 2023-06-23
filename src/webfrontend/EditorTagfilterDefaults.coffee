@@ -126,7 +126,6 @@ class EditorTagfilterDefaults extends CUI.Element
 						matchPool = true
 						break
 				if not matchPool
-					console.log "No se encontro ninguna pool"
 					continue
 
 			for rule, idx in applyFilter.default
@@ -157,6 +156,12 @@ class EditorTagfilterDefaults extends CUI.Element
 				continue
 
 			for rule in matchRules
+				if filterByField.field instanceof DateColumn and rule.modifier
+					if "today" in rule.modifier
+						if filterByField.field instanceof DateTimeColumn
+							rule.value = CUI.DateTime.format((new Date()).toISOString(), "display_short")
+						else
+							rule.value = CUI.DateTime.format((new Date()).toISOString().substr(0,10), "display_short")
 				filterByField.field.updateEditorInputValue(rule.value, object.getData())
 
 		return
@@ -182,7 +187,7 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 			mask = ez5.mask.CURRENT._mask_instance_by_name[ez5.mask.CURRENT._mask_by_id[mask_id].name]
 			options = []
 			for field in mask.getFields("editor")
-				if field instanceof TextColumn
+				if field instanceof TextColumn or field instanceof DateColumn
 					options.push
 						text: field.nameLocalized()
 						value: field.id()
@@ -276,12 +281,15 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 							mask_inst = ez5.mask.CURRENT._mask_instance_by_name[mask.name]
 							ro = new ResultObjectDemo(mask: mask_inst, format: "long", format_linked_object: "standard")
 							rec = mask_inst.getReplacementRecord(ro.getData())
-
 							repl =  []
 							for key of rec
 								repl.push("%"+key+"%")
-
 							# console.error "formButton", data, mask_inst, ro, rec, repl
+
+							if ez5.session.getReplacementRecord?()
+								# We get replacement for session data.
+								for key of ez5.session.getReplacementRecord()
+									repl.push("%"+key+"%")
 
 							new CUI.Tooltip
 								on_click: true
@@ -359,6 +367,35 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 									data: data
 									name: "value"
 								return numberInput.start()
+							else if dataField instanceof DateColumn
+								dateTime = dataField instanceof DateTimeColumn
+								proxyInput = new CUI.DataFieldProxy
+									element: (dataField) =>
+										options = new CUI.Options
+											name: "modifier"
+											data: data
+											options: [
+												text: $$(baseConfig.locaKey("parameter")+".date.replacement.today|text")
+												value: "today"
+												tooltip: text: $$(baseConfig.locaKey("parameter")+".date.replacement.today|tooltip")
+											]
+											onDataChanged: =>
+												dataField.reload()
+										if "today" in data.modifier
+											dateInput = null
+										else
+											dateInput = new CUI.DateTime
+												name: "value"
+												data: data
+												input_types: if dateTime then ["date_time"] else ["date"]
+										hl = new CUI.HorizontalList
+											maximize_horizontal: true
+											content: [
+												options,
+												dateInput
+											]
+										return hl
+								return proxyInput.start()
 							else
 								if CUI.isPlainObject(data.value)
 									data.value = ""
