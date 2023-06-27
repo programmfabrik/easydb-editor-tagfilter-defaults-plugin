@@ -184,10 +184,17 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 				operationField.enableOption("update")
 
 		getPresetOptions = (mask_id) ->
+			validField = (field) ->
+				if field instanceof TextColumn
+					return true
+				if field instanceof DateColumn and field not instanceof DateRangeColumn
+					return true
+				return false
+
 			mask = ez5.mask.CURRENT._mask_instance_by_name[ez5.mask.CURRENT._mask_by_id[mask_id].name]
 			options = []
 			for field in mask.getFields("editor")
-				if field instanceof TextColumn or field instanceof DateColumn
+				if validField(field)
 					options.push
 						text: field.nameLocalized()
 						value: field.id()
