@@ -152,19 +152,25 @@ class EditorTagfilterDefaults extends CUI.Element
 
 			if unmatchedRules.length == filterByField.rules.length
 				for rule in unmatchedRules
+					if filterByField.field instanceof DateColumn and rule.modifier
+						rule = @replaceDateRule(rule, filterByField.field)
 					filterByField.field.emptyEditorInputValue(rule.value, object.getData())
 				continue
 
 			for rule in matchRules
 				if filterByField.field instanceof DateColumn and rule.modifier
-					if "today" in rule.modifier
-						if filterByField.field instanceof DateTimeColumn
-							rule.value = CUI.DateTime.format((new Date()).toISOString(), "display_short")
-						else
-							rule.value = CUI.DateTime.format((new Date()).toISOString().substr(0,10), "display_short")
+					rule = @replaceDateRule(rule, filterByField.field)
 				filterByField.field.updateEditorInputValue(rule.value, object.getData())
 
 		return
+
+	replaceDateRule: (rule, field) ->
+		if "today" in rule.modifier
+			if field instanceof DateTimeColumn
+				rule.value = CUI.DateTime.format((new Date()).toISOString(), "display_short")
+			else
+				rule.value = CUI.DateTime.format((new Date()).toISOString().substr(0,10), "display_short")
+		return rule
 
 class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 
