@@ -1,5 +1,6 @@
 plugin:
   name: easydb-editor-tagfilter-defaults-plugin
+  url: https://github.com/programmfabrik/easydb-editor-tagfilter-defaults-plugin
   displayname:
     en-US: "Default Values Plugin"
     de-DE: "Standardwerte Plugin"
