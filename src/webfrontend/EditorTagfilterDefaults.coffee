@@ -195,6 +195,8 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 					return true
 				if field instanceof DateColumn and field not instanceof DateRangeColumn
 					return true
+				if field instanceof BooleanColumn
+					return true
 				return false
 
 			mask = ez5.mask.CURRENT._mask_instance_by_name[ez5.mask.CURRENT._mask_by_id[mask_id].name]
@@ -409,6 +411,15 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 											]
 										return hl
 								return proxyInput.start()
+							else if dataField instanceof BooleanColumn
+								if not CUI.util.isBoolean(data.value)
+									data.value = true
+
+								checkbox = new CUI.Checkbox
+									data: data
+									name: "value"
+								return checkbox.start()
+
 							else
 								if CUI.isPlainObject(data.value)
 									data.value = ""
