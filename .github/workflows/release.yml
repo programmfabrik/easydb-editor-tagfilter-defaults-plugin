@@ -30,7 +30,7 @@ jobs:
         shell: bash
 
       - name: Set zip file name
-        run: echo "ZIP_NAME=${{ github.repository }}.zip" >> $GITHUB_ENV
+        run: echo "ZIP_NAME=easydb-editor-tagfilter-defaults-plugin.zip" >> $GITHUB_ENV
 
       - name: Build and Package
         shell: bash
