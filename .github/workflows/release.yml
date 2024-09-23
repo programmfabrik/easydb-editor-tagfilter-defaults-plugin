@@ -43,5 +43,5 @@ jobs:
           draft: true
           generate_release_notes: true
           files: |
-            build/${{ env.ZIP_NAME }}
+            ${{ env.ZIP_NAME }}
             README.md
