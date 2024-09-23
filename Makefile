@@ -26,6 +26,19 @@ build: code buildinfojson
 code: $(JS) $(L10N)
 
 clean: clean-base
+	rm -f $(PLUGIN_PATH).zip || true
 
 wipe: wipe-base
+	rm -f $(PLUGIN_PATH).zip || true
 
+# fylr only
+zip: clean build
+	mkdir -p $(PLUGIN_PATH)/webfrontend/l10n
+
+	cp -r build/webfrontend $(PLUGIN_PATH)
+	cp manifest.yml $(PLUGIN_PATH)
+	cp build-info.json $(PLUGIN_PATH)
+	cp $(L10N_FILES) $(PLUGIN_PATH)/webfrontend/l10n
+	zip $(PLUGIN_PATH).zip -r $(PLUGIN_PATH)
+
+	rm -rf $(PLUGIN_PATH)
