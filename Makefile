@@ -22,6 +22,8 @@ all: build
 include easydb-library/tools/base-plugins.make
 
 build: code buildinfojson
+	mkdir -p build/l10n
+	cp -f $(L10N_FILES) build/l10n/editor-tagfilter-defaults.csv
 
 code: $(JS) $(L10N)
 
@@ -34,11 +36,10 @@ wipe: wipe-base
 # fylr only
 zip: clean build
 	mkdir -p $(PLUGIN_PATH)/webfrontend/l10n
-
 	cp -r build/webfrontend $(PLUGIN_PATH)
+	cp -r build/l10n $(PLUGIN_PATH)
 	cp manifest.yml $(PLUGIN_PATH)
 	cp build-info.json $(PLUGIN_PATH)
-	cp $(L10N_FILES) $(PLUGIN_PATH)/webfrontend/l10n
 	zip $(PLUGIN_PATH).zip -r $(PLUGIN_PATH)
 
 	rm -rf $(PLUGIN_PATH)
