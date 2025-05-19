@@ -38,7 +38,7 @@ zip: clean build
 	mkdir -p $(PLUGIN_PATH)/webfrontend/l10n
 	cp -r build/webfrontend $(PLUGIN_PATH)
 	cp -r build/l10n $(PLUGIN_PATH)
-	cp manifest.yml $(PLUGIN_PATH)
+	cp manifest.zip.yml $(PLUGIN_PATH)/manifest.yml
 	cp build-info.json $(PLUGIN_PATH)
 	zip $(PLUGIN_PATH).zip -r $(PLUGIN_PATH)
 

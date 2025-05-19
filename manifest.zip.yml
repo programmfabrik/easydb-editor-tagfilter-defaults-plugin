@@ -14,6 +14,8 @@ plugin:
     l10n: l10n
   l10n: l10n/editor-tagfilter-defaults.csv # l10n csv file for fylr
 
+base_url_prefix: webfrontend
+
 base_config:
   - name: editor-tagfilter-defaults
     group: editor
