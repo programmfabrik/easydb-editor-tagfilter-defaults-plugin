@@ -272,7 +272,10 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 					type: CUI.Form
 					onRender: (form) =>
 						toggleUpdateOperation(form.getData(), form)
-					fields: [
+					fields: if mask_opts.length == 0 then [
+						type: CUI.Output
+						text: $$("editor.tagfilter.defaults.no-valid-mask")
+					] else [
 						type: CUI.Select
 						options: mask_opts
 						name: pname
