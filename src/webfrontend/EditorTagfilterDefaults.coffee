@@ -50,13 +50,17 @@ class EditorTagfilterDefaults extends CUI.Element
 
 		# console.error "filters by mask name", filters_by_mask_name
 
-		CUI.Events.listen
-			type: [
-				"editor-load"
-				"editor-tags-field-changed"
-				"pool-field-changed"
-			]
+		listenTypes = [
+			"editor-load"
+			"editor-tags-field-changed"
+			"pool-field-changed"
+		]
 
+		if ez5.version("5.145")
+			listenTypes.push("editor-mask-changed")
+
+		CUI.Events.listen
+			type: listenTypes
 			call: (ev, info) =>
 
 				if not info.editor_data
@@ -102,6 +106,7 @@ class EditorTagfilterDefaults extends CUI.Element
 	#  tagfilter:
 	#    tagfilter: {all: {..}, ..}
 	applyFilters: (object, objectPool, applyFilters) ->
+		data = object.getData()
 		fields = object.mask.getFields("all")
 		filtersByField = {}
 
@@ -116,7 +121,7 @@ class EditorTagfilterDefaults extends CUI.Element
 			return
 
 		for applyFilter in applyFilters
-			tagfilter_ok = TagFilter.matchesTags(applyFilter.tagfilter.tagfilter, object.getData()._tags)
+			tagfilter_ok = TagFilter.matchesTags(applyFilter.tagfilter.tagfilter, data._tags)
 
 			#If we have pools set in the filter and the object has a pool set:
 			if applyFilter.pool_id.ids.length > 0 and objectPool
@@ -131,6 +136,7 @@ class EditorTagfilterDefaults extends CUI.Element
 			for rule, idx in applyFilter.default
 				rule._idx = idx
 				rule._tagfilter_match = tagfilter_ok
+				rule._tagfilter = applyFilter.tagfilter.tagfilter
 				switch rule.action
 					when "preset"
 						field = find_field(rule.column_id)
@@ -154,13 +160,17 @@ class EditorTagfilterDefaults extends CUI.Element
 				for rule in unmatchedRules
 					if filterByField.field instanceof DateColumn and rule.modifier
 						rule = @replaceDateRule(rule, filterByField.field)
-					filterByField.field.emptyEditorInputValue(rule.value, object.getData())
+					filterByField.field.emptyEditorInputValue(rule.value, data)
 				continue
 
 			for rule in matchRules
 				if filterByField.field instanceof DateColumn and rule.modifier
 					rule = @replaceDateRule(rule, filterByField.field)
-				filterByField.field.updateEditorInputValue(rule.value, object.getData())
+
+				if data._template and not rule._tagfilter
+					filterByField.field.updateEditorInputValue(rule.value, data._template)
+				else
+					filterByField.field.updateEditorInputValue(rule.value, data)
 
 		return
 
