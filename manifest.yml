@@ -4,6 +4,11 @@ plugin:
   displayname:
     en-US: "Default Values Plugin"
     de-DE: "Standardwerte Plugin"
+  info:
+    de-DE: |
+      Setzt im Editor einfache Standardwerte für Textfelder abhängig vom aktiven Tag-Filter. Nützlich, wenn je nach Tag unterschiedliche Vorgabewerte vorbelegt werden sollen, damit Anwender nicht bei jedem Datensatz dieselben Werte eintippen müssen. Reines Frontend-Plugin für [easydb5](https://docs.easydb.de/en/sysadmin/configuration/easydb-server.yml/plugins/tagfilter/) und [fylr](https://docs.fylr.io/plugins/overview).
+    en-US: |
+      Sets simple text-field defaults in the editor based on the active tag filter. Useful when different tags should pre-fill different default values, so users start from the right baseline instead of typing the same values on every record. This is a frontend-only plugin and works in both [easydb5](https://docs.easydb.de/en/sysadmin/configuration/easydb-server.yml/plugins/tagfilter/) and [fylr](https://docs.fylr.io/plugins/overview).
   version: 1.2
   vendor: Programmfabrik GmbH
   server:
