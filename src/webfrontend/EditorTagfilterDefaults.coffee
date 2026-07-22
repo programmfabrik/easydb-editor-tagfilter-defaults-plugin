@@ -229,7 +229,8 @@ class BaseConfigEditorTagfilterDefaults extends BaseConfigPlugin
 				get_mask_name = (mask_id) ->
 					ez5.mask.CURRENT._mask_by_id[mask_id]._name_localized
 
-				mask_ids = (mask.mask_id for mask in ez5.mask.CURRENT.masks)
+				# only local masks; the connector plugin merges remote masks (tagged with _instance) into ez5.mask.CURRENT
+				mask_ids = (mask.mask_id for mask in ez5.mask.CURRENT.masks when not mask._instance)
 
 				mask_ids.sort (a, b) ->
 
