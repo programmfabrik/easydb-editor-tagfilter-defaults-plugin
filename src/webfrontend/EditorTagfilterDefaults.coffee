@@ -45,7 +45,8 @@ class EditorTagfilterDefaults extends CUI.Element
 			else
 				filter.pool_id = {ids:[]}
 
-			filter.default = JSON.parse(filter.default)
+			if CUI.util.isString(filter.default)
+				filter.default = JSON.parse(filter.default)
 
 
 		# console.error "filters by mask name", filters_by_mask_name
